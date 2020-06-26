@@ -23,12 +23,14 @@ body{
     flex-direction: column;
     align-items: center;
     height: 100%;
+    z-index: 999;
 }
 
 h1{
     margin: 0;
     font-size: 70px;
     transition: font-size 1s;
+    z-index: 999;
 }
 
 h1:hover{
@@ -39,17 +41,19 @@ h2{
     margin: 0;
     font-size: px;
     transition: all 1s;
-    
+    z-index: 999;
 }
 
 .social-network i{
     font-size: 20px;
     margin-right: 8px;
     transition: all 1s;
+    z-index: 999;
 }
 
 .social-network i:hover{
     font-size: 30px;
+    z-index: 999;
 }
 
 .fade{
