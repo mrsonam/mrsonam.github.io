@@ -1,0 +1,57 @@
+html{
+    height: 100%;
+    font-family: 'Barlow', sans-serif;
+}
+body{
+    height: 100%;
+    background-color: #FEE140;
+    background-image: linear-gradient(90deg, #FEE140 0%, #FA709A 100%);
+
+}
+
+#particles-js{ 
+    z-index: -1;
+    position:absolute; 
+    width: 100%; 
+    height: 100%; 
+    
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+h1{
+    margin: 0;
+    font-size: 70px;
+    transition: font-size 1s;
+}
+
+h1:hover{
+    font-size: 100px;
+}
+
+h2{
+    margin: 0;
+    font-size: px;
+    transition: all 1s;
+    
+}
+
+.social-network i{
+    font-size: 20px;
+    margin-right: 8px;
+    transition: all 1s;
+}
+
+.social-network i:hover{
+    font-size: 30px;
+}
+
+.fade{
+    opacity: 0;
+}
