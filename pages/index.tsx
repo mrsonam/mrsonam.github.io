@@ -169,7 +169,7 @@ const Home: NextPage = () => {
 
         <section className={styles.right}>
           <h3 className={styles.right_title}>Projects</h3>
-          <div className={styles.projects} onTouchStart={(e) => handleTouchStart(e)} onTouchMove={(e) => handleTouchMove(e)} onTouchEnd={(e) => handleTouchEnd(e)}>
+          <div className={styles.projects} onTouchStart={(e) => handleTouchStart(e)} onTouchMove={(e) => handleTouchMove(e)} onTouchEnd={handleTouchEnd}>
             {projects.map(project => (
               <div className={`${styles.card} ${hide.includes(project.id) ? styles.hide : ''} ${hide.length + 1 === project.id ? styles.active : ''}`} key={project.id}>
                 <a href={project.link} target="__blank">
