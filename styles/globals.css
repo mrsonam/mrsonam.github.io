@@ -6,7 +6,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   background-color: #f3f4f5;
   overflow-x: hidden;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 a {

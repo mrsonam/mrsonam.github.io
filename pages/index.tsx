@@ -16,9 +16,11 @@ import css from '../public/svg/css.svg'
 import express from '../public/svg/express.svg'
 import firebase from '../public/svg/firebase.svg'
 import next from '../public/svg/next.svg'
+import sanity from '../public/svg/sanity.svg'
 import adonis from '../public/svg/adonis.svg'
 import vue from '../public/svg/vue.svg'
 import boafresh from '../public/images/boafresh.png'
+import damiBlog from '../public/images/damiBlog.png'
 import linkedinImg from '../public/images/linkedin.png'
 import disney from '../public/images/disney.png'
 import locationShare from '../public/images/location_share.png'
@@ -26,7 +28,7 @@ import fyp from '../public/images/fyp.png'
 import chevronLeft from '../public/svg/chevron-left.svg'
 import chevronRight from '../public/svg/chevron-right.svg'
 import redux from '../public/svg/redux.svg'
-import { SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { FiChevronRight, FiChevronLeft, FiGithub, FiLinkedin, FiInstagram } from 'react-icons/fi'
 
 
@@ -35,30 +37,36 @@ const Home: NextPage = () => {
   const projects = [
     {
       id: 1,
+      name: 'The Dami Blog: Blog App',
+      image: damiBlog,
+      link: 'https://blog-app-mrsonam.vercel.app',
+    },
+    {
+      id: 2,
       name: 'BoaFresh: Restaurant E-Commerce',
       image: boafresh,
       link: 'https://mrsonam.github.io/boafresh-api-react-ts-reduxtoolkit',
     },
     {
-      id: 2,
+      id: 3,
       name: 'Location Share: A location sharing app',
       image: locationShare,
       link: 'https://github.com/mrsonam/location-share',
     },
     {
-      id: 3,
+      id: 4,
       name: 'FYP: Handwriting Recognition System using CNN',
       image: fyp,
       link: 'https://github.com/mrsonam/HandwritingRecognitionSystem',
     },
     {
-      id: 4,
+      id: 5,
       name: 'Disney+ UI Clone',
       image: disney,
       link: 'https://mrsonam.github.io/disneyplus-clone-antd/',
     },
     {
-      id: 5,
+      id: 6,
       name: 'Linkedin UI Clone',
       image: linkedinImg,
       link: 'https://mrsonam.github.io/LinkedIn-Clone/',
@@ -73,7 +81,6 @@ const Home: NextPage = () => {
     if (currentProject < projects.length - 1) {
       setCurrentProject(currentProject + 1)
     }
-    console.log(currentProject)
   }
 
   const prevProjectHandler = () => {
@@ -83,7 +90,6 @@ const Home: NextPage = () => {
     if (currentProject > 1) {
       setCurrentProject(currentProject - 1)
     }
-    console.log(currentProject)
   }
 
   const [touchStart, setTouchStart] = useState(0);
@@ -144,24 +150,25 @@ const Home: NextPage = () => {
           <div>
             <h3>Skills</h3>
             <div className={styles.skills}>
-              <Image src={react} alt='react' className={styles.skill} width='25px' height='25px' />
-              <Image src={redux} alt='redux' className={styles.skill} width='25px' height='25px' />
-              <Image src={node} alt='node' className={styles.skill} width='25px' height='25px' />
-              <Image src={js} alt='javascript' className={styles.skill} width='25px' height='25px' />
-              <Image src={ts} alt='typescript' className={styles.skill} width='25px' height='25px' />
               <Image src={html} alt='html5' className={styles.skill} width='25px' height='25px' />
               <Image src={css} alt='css3' className={styles.skill} width='25px' height='25px' />
-              <Image src={express} alt='expressjs' className={styles.skill} width='25px' height='25px' />
+              <Image src={js} alt='javascript' className={styles.skill} width='25px' height='25px' />
+              <Image src={ts} alt='typescript' className={styles.skill} width='25px' height='25px' />
+              <Image src={react} alt='react' className={styles.skill} width='25px' height='25px' />
+              <Image src={next} alt='next' className={styles.skill} width='25px' height='25px' />
+              <Image src={redux} alt='redux' className={styles.skill} width='25px' height='25px' />
+              <Image src={node} alt='node' className={styles.skill} width='25px' height='25px' />
               <Image src={mongo} alt='mongo' className={styles.skill} width='25px' height='25px' />
               <Image src={firebase} alt='firebase' className={styles.skill} width='25px' height='25px' />
+              
             </div>
           </div>
 
           <div>
             <h3>Currently Learning</h3>
             <div className={styles.learning}>
-              <Image src={next} alt='next' className={styles.skill} width='25px' height='25px' />
-              <Image src={adonis} alt='adonis' className={styles.skill} width='25px' height='25px' />
+              <Image src={express} alt='expressjs' className={styles.skill} width='25px' height='25px' />
+              <Image src={sanity} alt='sanity' className={styles.skill} width='25px' height='25px' />
               <Image src={vue} alt='vue' className={styles.skill} width='25px' height='25px' />
             </div>
           </div>
@@ -170,7 +177,7 @@ const Home: NextPage = () => {
         <section className={styles.right}>
           <h3 className={styles.right_title}>Projects</h3>
           <div className={styles.projects} onTouchStart={(e) => handleTouchStart(e)} onTouchMove={(e) => handleTouchMove(e)} onTouchEnd={handleTouchEnd}>
-            {projects.map(project => (
+            {projects.map((project, index) => (
               <div className={`${styles.card} ${hide.includes(project.id) ? styles.hide : ''} ${hide.length + 1 === project.id ? styles.active : ''}`} key={project.id}>
                 <a href={project.link} target="__blank">
                   <Image src={project.image} alt={project.name} className={styles.image} />
@@ -180,8 +187,9 @@ const Home: NextPage = () => {
             ))}
           </div>
           <div className={styles.chevrons}>
+            {}
             <FiChevronLeft size={30} className={styles.chevron_left} onClick={prevProjectHandler} />
-            <FiChevronRight size={30} fontSize={30} className={styles.chevron_right} onClick={nextProjectHandler} />
+            <FiChevronRight size={30} className={styles.chevron_right} onClick={nextProjectHandler} />
           </div>
         </section>
       </div>
