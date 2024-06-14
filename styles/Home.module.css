@@ -106,12 +106,18 @@
   display: flex;
 }
 
+.name_container {
+  display: flex;
+  align-items: center;
+}
+
 .name {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-self: center;
-  max-height: 30px !important;
+  height: 100%;
+  /* margin-top: -50px; */
 }
 
 .links {
@@ -131,7 +137,8 @@
 .skills {
   width: 400px;
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
+  gap: 10px;
   align-items: flex-start;
 }
 
@@ -142,7 +149,7 @@
 .learning {
   width: 130px;
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
 }
 
 .projects {
