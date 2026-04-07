@@ -1,0 +1,35 @@
+export const experiences = [
+  {
+    id: "qxtech",
+    role: "Intern",
+    company: "QX Tech",
+    type: "Internship",
+    dates: "Mar 2026 - Present",
+    duration: "2 mos",
+    location: "Canberra, ACT, Australia \u00b7 On-site",
+    skills: ["Next.js", "Prompt Writing", "Agentic Workflows", "Tailwind CSS"],
+    description: "Refining my craft, architecting robust UIs, and learning the nuances of scalable production code and agentic workflows.",
+  },
+  {
+    id: "ekbana-associate",
+    role: "Associate Frontend Developer",
+    company: "EKbana Solutions Pte. Ltd",
+    type: "Full-time",
+    dates: "Dec 2021 - May 2024",
+    duration: "2 yrs 6 mos",
+    location: "Nepal",
+    skills: ["Next.js", "React.js", "JavaScript", "API Integration", "Responsive Web Design"],
+    description: "Spearheaded frontend development across multiple client projects. Worked extensively with React and Next.js to deliver high-performance, responsive web interfaces, seamlessly integrating complex REST APIs for dynamic features.",
+  },
+  {
+    id: "ekbana-intern",
+    role: "Frontend Intern",
+    company: "EKbana Solutions Pte. Ltd",
+    type: "Internship",
+    dates: "Sep 2021 - Dec 2021",
+    duration: "4 mos",
+    location: "Lalitpur District, Nepal",
+    skills: ["HTML", "CSS", "JavaScript", "Web Development"],
+    description: "Gained hands-on foundational skills in modern web development. Assisted senior engineers in building modular UI components and laid the groundwork for my professional software engineering career.",
+  }
+];

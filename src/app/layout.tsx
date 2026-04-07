@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Sonam Wangdi Sherpa | Frontend Engineer",
-  description: "Portfolio of Sonam Wangdi Sherpa, a frontend engineer based in Australia.",
+  title: "Sonam Wangdi Sherpa | Software Engineer",
+  description: "Portfolio of Sonam Wangdi Sherpa, a software engineer with extensive experience in fullstack development, based in Australia.",
 };
 
 export default function RootLayout({
@@ -23,9 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-      <body className="min-h-screen bg-background text-foreground flex flex-col font-sans transition-colors duration-300">
-        <main className="flex-grow flex flex-col items-center">
+    <html lang="en" className={`${inter.variable} ${manrope.variable} antialiased`} suppressHydrationWarning>
+      <body className="min-h-screen bg-background text-foreground flex flex-col font-sans transition-colors duration-300 overflow-x-hidden">
+        <main className="flex-grow flex flex-col items-center w-full">
           {children}
         </main>
       </body>

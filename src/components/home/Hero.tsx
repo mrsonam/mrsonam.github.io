@@ -1,79 +1,79 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Terminal } from "lucide-react";
 
 export default function Hero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      // Calculate offset from center of screen (-1 to 1)
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      setMousePosition({ x, y });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   return (
-    <section className="relative w-full min-h-[95vh] flex flex-col items-center justify-center overflow-hidden">
-      {/* Background Glowing Orb */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <section className="relative w-full min-h-screen flex flex-col justify-end overflow-hidden pb-12 pt-32 px-8">
+      <div className="w-full max-w-7xl mx-auto flex flex-col items-start gap-12">
+        {/* Editorial Label */}
         <motion.div
-          className="w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-blue-600/15 blur-[100px] dark:bg-blue-600/25 dark:blur-[120px]"
-          animate={{
-            x: mousePosition.x * 70,
-            y: mousePosition.y * 70,
-          }}
-          transition={{ type: "spring", stiffness: 30, damping: 20, mass: 0.5 }}
-        />
-      </div>
-
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center space-y-8 mt-12">
-        <motion.span
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-sm font-bold tracking-widest uppercase text-blue-600 dark:text-blue-400"
+           initial={{ opacity: 0, x: -20 }}
+           animate={{ opacity: 1, x: 0 }}
+           transition={{ duration: 0.6, ease: "easeOut" }}
+           className="absolute top-24 left-8 md:left-12 flex items-center gap-4"
         >
-          Sonam Wangdi Sherpa
-        </motion.span>
+          <span className="w-12 h-[1px] bg-primary"></span>
+          <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-primary">01 HUMAN INTELLIGENCE ONLY (POWERED BY AI)</span>
+        </motion.div>
         
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter">
+        {/* Massive Typographic Anchor */}
+        <h1 className="text-5xl md:text-8xl lg:text-[9rem] leading-[0.85] font-display font-black tracking-tighter uppercase text-foreground">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
             Adapt.
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-neutral-400 dark:text-neutral-600"
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-muted"
           >
             Unlearn.
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
-            Relearn.
+            Relearn<motion.span 
+              animate={{ opacity: [1, 1, 0, 0] }}
+              transition={{ repeat: Infinity, duration: 1.2, times: [0, 0.5, 0.5001, 1] }}
+              className="text-primary font-bold"
+            >
+              _
+            </motion.span>
           </motion.div>
         </h1>
         
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto"
-        >
-          From Nepal to Australia. My journey is defined by continuous growth, crafting premium digital experiences, and deeply embracing the evolving web ecosystem.
-        </motion.p>
+        {/* Asymmetrical Body */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 mt-12 md:mt-24">
+          <div className="hidden md:block md:col-span-1 border-r border-border h-full"></div>
+          <div className="md:col-span-5 md:col-start-7 flex flex-col items-start gap-8 md:gap-12">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="text-base md:text-lg text-foreground font-sans leading-relaxed"
+            >
+              From Nepal to Australia. My journey is defined by continuous growth, crafting premium digital experiences, and deeply embracing the evolving web ecosystem.
+            </motion.p>
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.7 }}
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              className="w-full md:w-auto bg-primary text-primary-foreground uppercase cursor-pointer text-xs tracking-widest font-bold px-10 py-5 hover:bg-foreground hover:text-background transition-colors duration-0 flex items-center justify-center gap-3"
+            >
+              <span>Unpack the Repo</span>
+              <Terminal className="w-4 h-4" strokeWidth={3} />
+            </motion.button>
+          </div>
+        </div> 
       </div>
     </section>
   );
