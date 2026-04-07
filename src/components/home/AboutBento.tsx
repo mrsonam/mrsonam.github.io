@@ -18,10 +18,10 @@ export default function AboutBento() {
           <div className="relative z-10 space-y-6 max-w-xl">
             <h3 className="text-4xl md:text-5xl font-display font-black tracking-tighter uppercase leading-[0.9]">The<br/>Journey.</h3>
             <p className="text-foreground/80 font-sans text-base md:text-lg">
-              I began my software engineering journey in 2021 back in Nepal, rooted in frontend development and modern UI engineering. Since then, I've evolved into building robust fullstack applications. In June 2024, I brought that passion across the world to Australia.
+              I began my software engineering journey in 2021 back in Nepal, rooted in frontend development and modern UI engineering. Since then, I&apos;ve evolved into building robust fullstack applications. In June 2024, I brought that passion across the world to Australia.
             </p>
             <p className="text-foreground/80 font-sans text-base md:text-lg">
-              Currently pursuing my Master's in IT, I constantly blend academic theory with real-world technical execution.
+              Currently pursuing my Master&apos;s in IT, I constantly blend academic theory with real-world technical execution.
             </p>
           </div>
         </motion.div>

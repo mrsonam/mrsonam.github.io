@@ -35,7 +35,7 @@ export default function ContactFooter() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-[14vw] md:text-[8rem] font-display font-black tracking-tighter uppercase leading-[0.8] text-background"
           >
-            Let's Build<br/>
+            Let&apos;s Build<br/>
             <span className="text-primary">Something.</span>
           </motion.h2>
 
@@ -46,7 +46,7 @@ export default function ContactFooter() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg md:text-2xl font-sans max-w-2xl text-background/80 leading-relaxed"
           >
-            I am currently seeking Software Engineer and developer roles, specializing in fullstack development. Let's connect and create exceptional digital experiences.
+            I am currently seeking Software Engineer and developer roles, specializing in fullstack development. Let&apos;s connect and create exceptional digital experiences.
           </motion.p>
         </div>
 
