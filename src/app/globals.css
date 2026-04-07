@@ -78,3 +78,9 @@ body {
     border-radius: 0px !important; 
   }
 }
+
+@layer components {
+  .admin-card-labels label[data-slot="label"] {
+    @apply text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground;
+  }
+}

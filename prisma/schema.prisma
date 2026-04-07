@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+model Settings {
+  id           Int      @id @default(1)
+  passcodeHash String
+  updatedAt    DateTime @updatedAt
+}
+
+model Experience {
+  id               String   @id @default(uuid())
+  company          String
+  role             String
+  employmentType   String? // e.g. Internship, Full-time
+  startDate        String
+  endDate          String
+  datesDisplay     String // e.g. "Mar 2026 - Present" (shown in timeline)
+  location         String?
+  description      String // Markdown content
+  skills           String[]
+  orderIndex       Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Project {
+  id               String   @id @default(uuid())
+  title            String
+  shortDescription String // Card subtitle
+  description      String // Markdown (modal body)
+  tech             String[]
+  imagePath        String? // Supabase Storage public URL
+  websiteUrl       String?
+  githubUrl        String?
+  color            String   @default("from-blue-900 to-slate-900")
+  orderIndex       Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}

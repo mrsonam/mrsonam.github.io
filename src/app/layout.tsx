@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${manrope.variable} antialiased`} suppressHydrationWarning>
       <body className="min-h-screen bg-background text-foreground flex flex-col font-sans transition-colors duration-300 overflow-x-hidden">
-        <main className="flex-grow flex flex-col items-center w-full">
+        <main className="flex w-full flex-grow flex-col items-stretch">
           {children}
         </main>
       </body>
