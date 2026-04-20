@@ -1,9 +1,40 @@
 "use client";
 
+import { useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 import { Terminal } from "lucide-react";
 
+const ADMIN_CURSOR_CLICKS = 3;
+const ADMIN_CURSOR_RESET_MS = 800;
+
 export default function Hero() {
+  const cursorClicksRef = useRef(0);
+  const cursorResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const onBlinkingCursorClick = useCallback(async () => {
+    if (cursorResetTimerRef.current) {
+      clearTimeout(cursorResetTimerRef.current);
+      cursorResetTimerRef.current = null;
+    }
+    cursorClicksRef.current += 1;
+    if (cursorClicksRef.current < ADMIN_CURSOR_CLICKS) {
+      cursorResetTimerRef.current = setTimeout(() => {
+        cursorClicksRef.current = 0;
+      }, ADMIN_CURSOR_RESET_MS);
+      return;
+    }
+    cursorClicksRef.current = 0;
+    try {
+      await fetch("/api/admin/unlock", {
+        method: "POST",
+        credentials: "same-origin",
+      });
+      window.location.href = "/admin/login";
+    } catch {
+      cursorClicksRef.current = 0;
+    }
+  }, []);
+
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-end overflow-hidden pb-12 pt-32 px-8">
       <div className="w-full max-w-7xl mx-auto flex flex-col items-start gap-12">
@@ -40,10 +71,13 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
-            Relearn<motion.span 
+            Relearn<motion.span
               animate={{ opacity: [1, 1, 0, 0] }}
               transition={{ repeat: Infinity, duration: 1.2, times: [0, 0.5, 0.5001, 1] }}
-              className="text-primary font-bold"
+              className="cursor-pointer select-none text-primary font-bold"
+              onClick={onBlinkingCursorClick}
+              role="presentation"
+              aria-hidden
             >
               _
             </motion.span>

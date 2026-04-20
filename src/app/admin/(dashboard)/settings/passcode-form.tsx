@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { updatePasscodeAction, type ActionState } from "@/app/admin/actions";
-import { Button } from "@/components/ui/button";
+import { AdminSubmitButton } from "@/components/admin/AdminSubmitButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -52,15 +52,16 @@ export function PasscodeForm() {
       )}
       {state?.ok && (
         <p className="text-sm font-medium text-primary" role="status">
-          Passcode updated.
+          Passcode updated successfully.
         </p>
       )}
-      <Button
+      <AdminSubmitButton
         type="submit"
         className="w-full text-[10px] font-bold tracking-[0.2em] uppercase sm:w-auto"
+        pendingLabel="Updating…"
       >
         Update passcode
-      </Button>
+      </AdminSubmitButton>
     </form>
   );
 }

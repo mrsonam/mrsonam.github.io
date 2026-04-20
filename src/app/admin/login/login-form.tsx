@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { loginAction, type ActionState } from "@/app/admin/actions";
-import { Button } from "@/components/ui/button";
+import { AdminSubmitButton } from "@/components/admin/AdminSubmitButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -35,12 +35,13 @@ export function LoginForm() {
           {state.error}
         </p>
       )}
-      <Button
+      <AdminSubmitButton
         type="submit"
         className="h-11 w-full text-[10px] font-bold tracking-[0.22em] uppercase"
+        pendingLabel="Signing in…"
       >
         Enter dashboard
-      </Button>
+      </AdminSubmitButton>
     </form>
   );
 }

@@ -31,7 +31,7 @@ export default function AdminHomePage() {
       <AdminPageHeader
         eyebrow="Control room"
         title="Dashboard"
-        description="Changes save to the database and the public site revalidates on a short interval. Use the sections below to edit your portfolio content."
+        description="Changes save to the database and appear on the public site after you publish. Use the sections below to edit your portfolio content."
       />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

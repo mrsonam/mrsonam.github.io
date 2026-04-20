@@ -1,9 +1,9 @@
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { deleteProjectAction } from "@/app/admin/actions";
+import { AdminDeleteForm } from "@/components/admin/AdminDeleteForm";
 import { AdminCard } from "@/components/admin/AdminCard";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +21,10 @@ export default async function AdminProjectsPage() {
         actions={
           <Link
             href="/admin/projects/new"
-            className={cn(buttonVariants({ variant: "default" }), "text-[10px] font-bold tracking-[0.18em] uppercase")}
+            className={cn(
+              buttonVariants({ variant: "default" }),
+              "w-full text-[10px] font-bold tracking-[0.18em] uppercase sm:w-auto",
+            )}
           >
             Add project
           </Link>
@@ -48,7 +51,7 @@ export default async function AdminProjectsPage() {
                     {row.shortDescription}
                   </p>
                 </div>
-                <div className="flex shrink-0 gap-2">
+                <div className="flex shrink-0 flex-wrap gap-2">
                   <Link
                     href={`/admin/projects/${row.id}`}
                     className={cn(
@@ -58,16 +61,7 @@ export default async function AdminProjectsPage() {
                   >
                     Edit
                   </Link>
-                  <form action={deleteProjectAction.bind(null, row.id)}>
-                    <Button
-                      type="submit"
-                      variant="destructive"
-                      size="sm"
-                      className="text-[10px] font-bold tracking-[0.18em] uppercase"
-                    >
-                      Delete
-                    </Button>
-                  </form>
+                  <AdminDeleteForm action={deleteProjectAction} id={row.id} />
                 </div>
               </li>
             ))}

@@ -1,10 +1,7 @@
 import Link from "next/link";
-import { createProjectAction } from "@/app/admin/actions";
 import { AdminBackLink } from "@/components/admin/AdminBackLink";
-import { AdminCard } from "@/components/admin/AdminCard";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { ProjectFields } from "@/components/admin/ProjectFields";
-import { Button } from "@/components/ui/button";
+import { ProjectCreateForm } from "@/components/admin/ProjectForms";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +19,7 @@ export default function NewProjectPage() {
               href="/admin/projects"
               className={cn(
                 buttonVariants({ variant: "outline", size: "sm" }),
-                "text-[10px] font-bold tracking-[0.18em] uppercase",
+                "w-full text-[10px] font-bold tracking-[0.18em] uppercase sm:w-auto",
               )}
             >
               Cancel
@@ -31,17 +28,7 @@ export default function NewProjectPage() {
         />
       </div>
 
-      <form action={createProjectAction} className="space-y-8">
-        <AdminCard className="p-6 md:p-10">
-          <ProjectFields />
-        </AdminCard>
-        <Button
-          type="submit"
-          className="text-[10px] font-bold tracking-[0.2em] uppercase"
-        >
-          Create project
-        </Button>
-      </form>
+      <ProjectCreateForm />
     </div>
   );
 }
