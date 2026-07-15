@@ -17,7 +17,7 @@ const unlockCookieOptions = {
   path: "/",
 };
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname === "/") {
@@ -49,6 +49,10 @@ export async function middleware(request: NextRequest) {
   if (token) {
     try {
       await jwtVerify(token, secretKey);
+      // Already signed in — skip the login page.
+      if (isLoginPath(pathname)) {
+        return NextResponse.redirect(new URL("/admin", request.url));
+      }
       return NextResponse.next();
     } catch {
       // Invalid or expired session — fall through to gate / login-only rules.

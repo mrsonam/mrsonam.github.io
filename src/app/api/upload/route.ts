@@ -4,6 +4,18 @@ import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/auth";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { randomUUID } from "crypto";
 
+const MAX_UPLOAD_MB = 5;
+const MAX_UPLOAD_BYTES = MAX_UPLOAD_MB * 1024 * 1024;
+
+/** MIME types accepted for project images, mapped to the stored extension. */
+const ALLOWED_IMAGE_TYPES: Record<string, string> = {
+  "image/jpeg": ".jpg",
+  "image/png": ".png",
+  "image/webp": ".webp",
+  "image/avif": ".avif",
+  "image/gif": ".gif",
+};
+
 export async function POST(request: Request) {
   try {
     const token = (await cookies()).get(ADMIN_COOKIE)?.value;
@@ -27,20 +39,30 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Missing file" }, { status: 400 });
   }
 
-  const name =
-    file instanceof File && file.name ? file.name : "upload";
-  const ext = name.includes(".") ? name.slice(name.lastIndexOf(".")) : "";
+  const contentType = file.type;
+  const ext = ALLOWED_IMAGE_TYPES[contentType];
+  if (!ext) {
+    return NextResponse.json(
+      { error: "Only JPEG, PNG, WebP, AVIF, or GIF images are allowed." },
+      { status: 415 },
+    );
+  }
+  if (file.size > MAX_UPLOAD_BYTES) {
+    return NextResponse.json(
+      { error: `Image must be ${MAX_UPLOAD_MB} MB or smaller.` },
+      { status: 413 },
+    );
+  }
+
   const path = `${randomUUID()}${ext}`;
 
   const buffer = Buffer.from(await file.arrayBuffer());
   const supabase = getSupabaseAdmin();
-  const contentType = file.type || "application/octet-stream";
 
   const { error } = await supabase.storage
     .from("portfolio-media")
     .upload(path, buffer, {
       contentType,
-      upsert: true,
     });
 
   if (error) {

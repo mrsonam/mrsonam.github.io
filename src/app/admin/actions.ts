@@ -1,11 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { ADMIN_COOKIE, signAdminSessionToken } from "@/lib/auth";
+import { checkRateLimit, resetRateLimit } from "@/lib/rate-limit";
+
+const LOGIN_ATTEMPT_LIMIT = 5;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 
 const cookieOptions = {
   httpOnly: true,
@@ -40,6 +44,18 @@ export async function loginAction(
   formData: FormData,
 ): Promise<ActionState> {
   try {
+    const ip =
+      (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      "unknown";
+    const rateKey = `login:${ip}`;
+    const rate = checkRateLimit(rateKey, LOGIN_ATTEMPT_LIMIT, LOGIN_WINDOW_MS);
+    if (!rate.ok) {
+      const minutes = Math.max(1, Math.ceil(rate.retryAfterSeconds / 60));
+      return {
+        error: `Too many attempts. Try again in ${minutes} minute${minutes === 1 ? "" : "s"}.`,
+      };
+    }
+
     const passcode = String(formData.get("passcode") ?? "");
     const settings = await prisma.settings.findUnique({ where: { id: 1 } });
     if (
@@ -48,6 +64,7 @@ export async function loginAction(
     ) {
       return { error: "Invalid passcode." };
     }
+    resetRateLimit(rateKey);
     const token = await signAdminSessionToken();
     (await cookies()).set(ADMIN_COOKIE, token, cookieOptions);
     revalidatePath("/admin");

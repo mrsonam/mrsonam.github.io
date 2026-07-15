@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import type { ProjectPublic } from "@/lib/content";
@@ -13,20 +14,51 @@ type Props = {
 
 export default function Projects({ projects }: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+
+  const openProject = useCallback((id: string) => {
+    triggerRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    setSelectedId(id);
+  }, []);
 
   useEffect(() => {
+    if (!selectedId) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSelectedId(null);
+      if (e.key === "Escape") {
+        setSelectedId(null);
+        return;
+      }
+      // Keep Tab focus inside the dialog while it is open.
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || active === dialogRef.current)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-    if (selectedId) {
-      window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    dialogRef.current?.focus();
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
+      triggerRef.current?.focus();
     };
   }, [selectedId]);
 
@@ -51,8 +83,18 @@ export default function Projects({ projects }: Props) {
           <motion.div
             key={project.id}
             layoutId={`card-${project.id}`}
-            onClick={() => setSelectedId(project.id)}
-            className="cursor-pointer border border-border bg-background hover:bg-secondary transition-colors duration-300 group flex flex-col"
+            onClick={() => openProject(project.id)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openProject(project.id);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-haspopup="dialog"
+            aria-label={`View project: ${project.title}`}
+            className="cursor-pointer border border-border bg-background hover:bg-secondary transition-colors duration-300 group flex flex-col focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             whileHover={{ y: -10 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
@@ -64,11 +106,12 @@ export default function Projects({ projects }: Props) {
               )}
             >
               {project.imagePath ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={project.imagePath}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover"
+                  alt={`${project.title} cover`}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover"
                 />
               ) : null}
               {!project.imagePath ? (
@@ -131,8 +174,13 @@ export default function Projects({ projects }: Props) {
 
             <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 md:p-8 md:py-12 pointer-events-none">
               <motion.div
+                ref={dialogRef}
                 layoutId={`card-${selectedProject.id}`}
-                className="w-full h-full max-w-7xl max-h-screen bg-background border border-border pointer-events-auto flex flex-col overflow-hidden"
+                role="dialog"
+                aria-modal="true"
+                aria-label={selectedProject.title}
+                tabIndex={-1}
+                className="w-full h-full max-w-7xl max-h-screen bg-background border border-border pointer-events-auto flex flex-col overflow-hidden focus:outline-none"
                 style={{ originX: 0.5, originY: 0.5 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
@@ -152,11 +200,12 @@ export default function Projects({ projects }: Props) {
                     <X className="w-5 h-5 md:w-6 md:h-6" strokeWidth={3} />
                   </button>
                   {selectedProject.imagePath ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={selectedProject.imagePath}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-cover"
+                      alt={`${selectedProject.title} cover`}
+                      fill
+                      sizes="100vw"
+                      className="object-cover"
                     />
                   ) : null}
                   {!selectedProject.imagePath ? (
